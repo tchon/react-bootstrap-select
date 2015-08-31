@@ -1,26 +1,31 @@
 /* global React, $ */
 'use strict'; 
 
+var React = require('react');
+
 require('../js/bootstrap-select');
 
-var BootstrapSelect = React.createClass({displayName: 'BootstrapSelect',
+var BootstrapSelect = React.createClass({
+  displayName: 'BootstrapSelect',
   getInitialState: function () {
     return {
       open: false
     };
   },
   componentDidUpdate: function () {
-    $(this.getDOMNode()).find('select').selectpicker('refresh');
-    var select = $(this.getDOMNode()).find('div.bootstrap-select');
+    var domNode = React.findDOMNode(this);
+
+    $(domNode).find('select').selectpicker('refresh');
+    var select = $(domNode).find('div.bootstrap-select');
     select.toggleClass('open', this.state.open);
   },
   componentWillUnmount: function () {
-    var self = this;
-    var select = $(this.getDOMNode()).find('select');
+    var domNode = React.findDOMNode(this);
 
-    var button = $(this.getDOMNode()).find('button');
-    var dropdown = $(this.getDOMNode()).find('.dropdown-menu.open');
-    var items = $(this.getDOMNode()).find('ul.dropdown-menu li a');
+    var select = $(domNode).find('select');
+    var button = $(domNode).find('button');
+    var dropdown = $(domNode).find('.dropdown-menu.open');
+    var items = $(domNode).find('ul.dropdown-menu li a');
 
     $('html').off('click');
     button.off('click');
@@ -28,12 +33,14 @@ var BootstrapSelect = React.createClass({displayName: 'BootstrapSelect',
   },
   componentDidMount: function () {
     var self = this;
-    var select = $(this.getDOMNode()).find('select');
+    var domNode = React.findDOMNode(this);
+
+    var select = $(domNode).find('select');
     $(select).selectpicker();
 
-    var button = $(this.getDOMNode()).find('button');
-    var dropdown = $(this.getDOMNode()).find('.dropdown-menu.open');
-    var items = $(this.getDOMNode()).find('ul.dropdown-menu li a');
+    var button = $(domNode).find('button');
+    var dropdown = $(domNode).find('.dropdown-menu.open');
+    var items = $(domNode).find('ul.dropdown-menu li a');
 
     $('html').click(function () {
       self.setState({ open: false });
